@@ -248,7 +248,9 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state></state>
+          <state>$PROJ_DIR$</state>
+          <state>$PROJ_DIR$\STM8L15x_StdPeriph_Driver\src</state>
+          <state>$PROJ_DIR$\STM8L15x_StdPeriph_Driver\inc</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -500,7 +502,7 @@
       <name>ILINK</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>0</version>
+        <version>1</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -517,7 +519,7 @@
         </option>
         <option>
           <name>IlinkOutputFile</name>
-          <state></state>
+          <state>Sir-Wheelium-III.out</state>
         </option>
         <option>
           <name>IlinkDebugInfoEnable</name>
@@ -721,6 +723,14 @@
         <option>
           <name>IlinkLogUnusedFragments</name>
           <state>0</state>
+        </option>
+        <option>
+          <name>IlinkCrcReverseByteOrder</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkCrcUseAsInput</name>
+          <state>1</state>
         </option>
       </data>
     </settings>
@@ -1249,7 +1259,7 @@
       <name>ILINK</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>0</version>
+        <version>1</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -1471,6 +1481,14 @@
           <name>IlinkLogUnusedFragments</name>
           <state>0</state>
         </option>
+        <option>
+          <name>IlinkCrcReverseByteOrder</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkCrcUseAsInput</name>
+          <state>1</state>
+        </option>
       </data>
     </settings>
     <settings>
@@ -1500,8 +1518,23 @@
       <data/>
     </settings>
   </configuration>
+  <mfc_discard>
+    <configuration>Debug</configuration>
+  </mfc_discard>
   <file>
     <name>$PROJ_DIR$\main.c</name>
+  </file>
+  <file>
+    <name>$PROJ_DIR$\STM8L15x_StdPeriph_Driver\inc\stm8l15x.h</name>
+  </file>
+  <file>
+    <name>$PROJ_DIR$\stm8l15x_conf.h</name>
+  </file>
+  <file>
+    <name>$PROJ_DIR$\STM8L15x_StdPeriph_Driver\src\stm8l15x_itc.c</name>
+  </file>
+  <file>
+    <name>$PROJ_DIR$\STM8L15x_StdPeriph_Driver\inc\stm8l15x_itc.h</name>
   </file>
 </project>
 
