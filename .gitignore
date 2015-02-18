@@ -47,7 +47,7 @@ Lint/gcc-include-path.lnt
 Lint/size-options.lnt
 
 # ignore compiled output and IAR stuff
-Debug/
+Debug/*
 settings/
 *.pbi
 *.dep
