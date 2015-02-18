@@ -14,6 +14,14 @@ Checksum=856152296
 ShowArgs=0
 [Disassembly]
 MixedMode=1
+[CallStackLog]
+Enabled=0
+[DriverProfiling]
+Enabled=0
+Mode=1
+Graph=0
+Symbiont=0
+Exclusions=
 [InterruptLog]
 LogEnabled=0
 SumEnabled=0
@@ -21,8 +29,6 @@ GraphEnabled=0
 ShowTimeLog=1
 ShowTimeSum=1
 SumSortOrder=0
-[Breakpoints]
-Count=0
 [Interrupts]
 Enabled=1
 [MemoryMap]
@@ -32,6 +38,11 @@ UseAuto=0
 TypeViolation=1
 UnspecRange=1
 ActionState=1
+[Trace1]
+Enabled=0
+ShowSource=1
+[Breakpoints]
+Count=0
 [Log file]
 LoggingEnabled=_ 0
 LogFile=_ ""
@@ -42,14 +53,3 @@ LogFile=_ ""
 [Aliases]
 Count=0
 SuppressDialog=0
-[Trace1]
-Enabled=0
-ShowSource=1
-[CallStackLog]
-Enabled=0
-[DriverProfiling]
-Enabled=0
-Mode=1
-Graph=0
-Symbiont=0
-Exclusions=
