@@ -1,29 +1,22 @@
 /**
   ******************************************************************************
-  * @file    CLK/CLK_SYSCLKSwitch/stm8l15x_conf.h
+  * @file    Project/Template/stm8l15x_conf.h
   * @author  MCD Application Team
-  * @version V1.5.2
-  * @date    30-September-2014
+  * @version V0.0.3
+  * @date    07/21/2009
   * @brief   Library configuration file.
   ******************************************************************************
-  * @attention
+  * @copy
   *
-  * <h2><center>&copy; COPYRIGHT 2014 STMicroelectronics</center></h2>
+  * THE PRESENT FIRMWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
+  * WITH CODING INFORMATION REGARDING THEIR PRODUCTS IN ORDER FOR THEM TO SAVE
+  * TIME. AS A RESULT, STMICROELECTRONICS SHALL NOT BE HELD LIABLE FOR ANY
+  * DIRECT, INDIRECT OR CONSEQUENTIAL DAMAGES WITH RESPECT TO ANY CLAIMS ARISING
+  * FROM THE CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE
+  * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
   *
-  * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
-  * You may not use this file except in compliance with the License.
-  * You may obtain a copy of the License at:
-  *
-  *        http://www.st.com/software_license_agreement_liberty_v2
-  *
-  * Unless required by applicable law or agreed to in writing, software 
-  * distributed under the License is distributed on an "AS IS" BASIS, 
-  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  * See the License for the specific language governing permissions and
-  * limitations under the License.
-  *
-  ******************************************************************************
-  */  
+  * <h2><center>&copy; COPYRIGHT 2009 STMicroelectronics</center></h2>
+  */ 
 
 /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __STM8L15x_CONF_H
@@ -31,36 +24,35 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm8l15x.h"
+#include "icc_measure.h"
 
 /* Uncomment the line below to enable peripheral header file inclusion */
-#include "stm8l15x_adc.h"
-#include "stm8l15x_aes.h"
-#include "stm8l15x_beep.h"
-#include "stm8l15x_clk.h"
-#include "stm8l15x_comp.h"
-#include "stm8l15x_dac.h"
-#include "stm8l15x_dma.h"
+/* #include "stm8l15x_adc.h" */
+/* #include "stm8l15x_beep.h" */
+ #include "stm8l15x_clk.h" 
+/* #include "stm8l15x_comp.h" */
+/* #include "stm8l15x_dac.h" */
+/* #include "stm8l15x_dma.h" */
 #include "stm8l15x_exti.h"
 #include "stm8l15x_flash.h"
 #include "stm8l15x_gpio.h"
-#include "stm8l15x_i2c.h"
-#include "stm8l15x_irtim.h"
-#include "stm8l15x_itc.h"
-#include "stm8l15x_iwdg.h"
-#include "stm8l15x_lcd.h"
-#include "stm8l15x_pwr.h"
-#include "stm8l15x_rst.h"
-#include "stm8l15x_rtc.h"
-#include "stm8l15x_spi.h"
-#include "stm8l15x_syscfg.h"
-#include "stm8l15x_tim1.h"
-#include "stm8l15x_tim2.h"
-#include "stm8l15x_tim3.h"
-#include "stm8l15x_tim4.h"
-#include "stm8l15x_tim5.h"
-#include "stm8l15x_usart.h"
-#include "stm8l15x_wfe.h"
-#include "stm8l15x_wwdg.h"
+/* #include "stm8l15x_i2c.h" */
+/* #include "stm8l15x_irtim.h" */
+/* #include "stm8l15x_itc.h" */
+/* #include "stm8l15x_iwdg.h" */
+ #include "stm8l15x_lcd.h" 
+/* #include "stm8l15x_pwr.h" */
+/* #include "stm8l15x_rst.h" */
+ #include "stm8l15x_rtc.h" 
+/* #include "stm8l15x_spi.h" */
+/* #include "stm8l15x_syscfg.h" */
+/* #include "stm8l15x_tim1.h" */
+/* #include "stm8l15x_tim2.h" */
+/* #include "stm8l15x_tim3.h" */
+#include "stm8l15x_tim4.h" 
+/* #include "stm8l15x_usart.h"*/
+/* #include "stm8l15x_wfe.h" */
+/* #include "stm8l15x_wwdg.h" */
 
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
@@ -88,4 +80,4 @@
 
 #endif /* __STM8L15x_CONF_H */
 
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+/******************* (C) COPYRIGHT 2009 STMicroelectronics *****END OF FILE****/

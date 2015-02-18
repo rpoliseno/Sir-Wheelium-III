@@ -73,6 +73,9 @@
    STM8AL3L48, STM8AL3L46 microcontrollers with 8-KB, 16-KB or 32-KB Flash
  */
 
+// TODO: Not sure if this is the correct choice for our micro.
+#define STM8L15X_MD
+
 #if !defined (STM8L15X_MD) && !defined (STM8L15X_MDP) && !defined (STM8L15X_HD) && !defined (STM8L15X_LD) \
 && !defined (STM8L05X_LD_VL) && !defined (STM8L05X_MD_VL) && !defined (STM8L05X_HD_VL) && !defined (STM8AL31_L_MD)
  #error "Please select first the target STM8L device used in your application (in stm8l15x.h file)"
