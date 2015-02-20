@@ -434,7 +434,9 @@ void CLK_SYSCLKSourceConfig(CLK_SYSCLKSource_TypeDef CLK_SYSCLKSource)
   */
 CLK_SYSCLKSource_TypeDef CLK_GetSYSCLKSource(void)
 {
-  return ((CLK_SYSCLKSource_TypeDef)(CLK->SCSR));
+   CLK_SYSCLKSource_TypeDef clockSource = CLK->SCSR;
+   return clockSource;
+  //return ((CLK_SYSCLKSource_TypeDef)(CLK->SCSR));
 }
 
 /**

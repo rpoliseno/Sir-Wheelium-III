@@ -64,46 +64,28 @@ void main(void)
   enableInterrupts();
 
   /* Initialize LEDs mounted on STM8L152X-EVAL board */
-  STM_EVAL_LEDInit(LED1);
-  STM_EVAL_LEDInit(LED2);
   STM_EVAL_LEDInit(LED3);
   STM_EVAL_LEDInit(LED4);
 
-  /* Turn on LED1 and LED3 */
-  STM_EVAL_LEDOn(LED1);
-  STM_EVAL_LEDOn(LED3);
-
   /* Initialize push-buttons mounted on STM8L152X-EVAL board */
-  STM_EVAL_PBInit(BUTTON_RIGHT, BUTTON_MODE_EXTI);
-  STM_EVAL_PBInit(BUTTON_LEFT, BUTTON_MODE_EXTI);
-  STM_EVAL_PBInit(BUTTON_UP, BUTTON_MODE_EXTI);
-  STM_EVAL_PBInit(BUTTON_DOWN, BUTTON_MODE_EXTI);
-
-  /* Init the Eval board LCD */
-  STM8_EVAL_LCD_Init();
-
-  /* Clear LCD */
-  LCD_Clear();
+//  STM_EVAL_PBInit(BUTTON_RIGHT, BUTTON_MODE_EXTI);
+//  STM_EVAL_PBInit(BUTTON_LEFT, BUTTON_MODE_EXTI);
+//  STM_EVAL_PBInit(BUTTON_UP, BUTTON_MODE_EXTI);
+//  STM_EVAL_PBInit(BUTTON_DOWN, BUTTON_MODE_EXTI);
 
   /* Enable general interrupts */
   enableInterrupts();
 
-  LCD_SetCursorPos(LCD_LINE1, 0);
-  LCD_Print("  System Clock  ");
-  LCD_SetCursorPos(LCD_LINE2, 0);
-  LCD_Print("  Source:  HSE  ");
 
   while (1)
   {
-    /* Toggle LED2 and LED4 */
-    STM_EVAL_LEDToggle(LED2);
+    /* Toggle LED4 */
     STM_EVAL_LEDToggle(LED4);
 
     /* Insert a delay */
     Delay(10);
 
-    /* Toggle LED1 and LED3 */
-    STM_EVAL_LEDToggle(LED1);
+    /* Toggle LED3 */
     STM_EVAL_LEDToggle(LED3);
 
     /* Insert a delay */
@@ -120,10 +102,10 @@ static void CLK_Config(void)
 {
   /* Select HSE as system clock source */
   CLK_SYSCLKSourceSwitchCmd(ENABLE);
-  CLK_SYSCLKSourceConfig(CLK_SYSCLKSource_HSE);
+  CLK_SYSCLKSourceConfig(CLK_SYSCLKSource_HSI);
   /* system clock prescaler: 1*/
   CLK_SYSCLKDivConfig(CLK_SYSCLKDiv_1);
-  while (CLK_GetSYSCLKSource() != CLK_SYSCLKSource_HSE)
+  while (CLK_GetSYSCLKSource() != CLK_SYSCLKSource_HSI)
   {}
 }
 #ifdef  USE_FULL_ASSERT

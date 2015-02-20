@@ -62,14 +62,14 @@
 #define LED2_GPIO_PORT              GPIOA
 #define LED2_GPIO_PIN               GPIO_Pin_5
 
-#define LED3_GPIO_PORT              GPIOA
-#define LED3_GPIO_PIN               GPIO_Pin_6
+#define LED3_GPIO_PORT              GPIOE
+#define LED3_GPIO_PIN               GPIO_Pin_7
 
-#define LED4_GPIO_PORT              GPIOA
+#define LED4_GPIO_PORT              GPIOC
 #define LED4_GPIO_PIN               GPIO_Pin_7
 
-#define LED5_GPIO_PORT              GPIOD
-#define LED5_GPIO_PIN               GPIO_Pin_2
+#define LED5_GPIO_PORT              GPIOC
+#define LED5_GPIO_PIN               GPIO_Pin_7
 
 /**
   * @}

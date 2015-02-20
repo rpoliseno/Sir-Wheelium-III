@@ -9,7 +9,7 @@ TriggerName=main
 LimitSize=0
 ByteLimit=50
 [DebugChecksum]
-Checksum=1500539815
+Checksum=2112844306
 [CallStack]
 ShowArgs=0
 [Disassembly]
@@ -41,6 +41,8 @@ ActionState=1
 [Trace1]
 Enabled=0
 ShowSource=1
+[watch_formats]
+Fmt0={W}0:LED1	4	0
 [Breakpoints]
 Count=0
 [Log file]

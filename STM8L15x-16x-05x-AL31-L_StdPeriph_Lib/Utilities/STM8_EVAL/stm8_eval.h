@@ -128,9 +128,9 @@ typedef enum
   *       boards, you can define the board in your toolchain compiler preprocessor.
   */
 #if !defined (USE_STM8L1526_EVAL) && !defined (USE_STM8L1528_EVAL)
-//TODO: Doesn't seem to work right.
-//#define USE_STM8L1526_EVAL
-#define USE_STM8L1528_EVAL
+//TODO: Which do I choose?
+#define USE_STM8L1526_EVAL
+//#define USE_STM8L1528_EVAL
 #endif
 
 #ifdef USE_STM8L1526_EVAL
