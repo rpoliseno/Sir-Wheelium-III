@@ -70,7 +70,7 @@
         </option>
         <option>
           <name>GenLibInFormatterDescription</name>
-          <state>No specifier n, no float, no scan set, no assignment suppressing.</state>
+          <state>Full formatting, without multibytes.</state>
         </option>
         <option>
           <name>GenLibOutFormatter</name>
@@ -79,7 +79,7 @@
         </option>
         <option>
           <name>GenLibOutFormatterDescription</name>
-          <state>No specifier a or A, no specifier n, no float.</state>
+          <state>Full formatting, without multibytes.</state>
         </option>
         <option>
           <name>GenStackSize</name>
@@ -118,7 +118,11 @@
         </option>
         <option>
           <name>GenMathFunctionDescription</name>
+<<<<<<< HEAD
           <state></state>
+=======
+          <state>Default variants of cos, sin, tan, log, log10, pow, and exp.</state>
+>>>>>>> develop
         </option>
       </data>
     </settings>
@@ -1601,16 +1605,29 @@
     <name>$PROJ_DIR$\Bluetooth.c</name>
   </file>
   <file>
+<<<<<<< HEAD
     <name>$PROJ_DIR$\Bluetooth.h</name>
   </file>
   <file>
     <name>$PROJ_DIR$\main.c</name>
-  </file>
-  <file>
+=======
     <name>$PROJ_DIR$\STM8L15x-16x-05x-AL31-L_StdPeriph_Lib\Utilities\STM8_EVAL\Common\stm8_eval_lcd.c</name>
   </file>
   <file>
     <name>$PROJ_DIR$\STM8L15x-16x-05x-AL31-L_StdPeriph_Lib\Utilities\STM8_EVAL\Common\stm8_eval_lcd.h</name>
+>>>>>>> develop
+  </file>
+  <file>
+    <name>$PROJ_DIR$\STM8L15x-16x-05x-AL31-L_StdPeriph_Lib\Utilities\STM8_EVAL\STM8L1526_EVAL\stm8l1526_eval.c</name>
+  </file>
+  <file>
+    <name>$PROJ_DIR$\STM8L15x-16x-05x-AL31-L_StdPeriph_Lib\Utilities\STM8_EVAL\STM8L1526_EVAL\stm8l1526_eval.h</name>
+  </file>
+  <file>
+    <name>$PROJ_DIR$\STM8L15x-16x-05x-AL31-L_StdPeriph_Lib\Utilities\STM8_EVAL\STM8L1526_EVAL\stm8l1526_eval_glass_lcd.c</name>
+  </file>
+  <file>
+    <name>$PROJ_DIR$\STM8L15x-16x-05x-AL31-L_StdPeriph_Lib\Utilities\STM8_EVAL\STM8L1526_EVAL\stm8l1526_eval_glass_lcd.h</name>
   </file>
   <file>
     <name>$PROJ_DIR$\STM8L15x-16x-05x-AL31-L_StdPeriph_Lib\Utilities\STM8_EVAL\STM8L1526_EVAL\stm8l1526_eval.c</name>
