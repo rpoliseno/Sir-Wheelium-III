@@ -89,7 +89,7 @@ void main(void)
     STM_EVAL_LEDToggle(LED3);
 
     /* Insert a delay */
-    Delay(10);
+    Delay(1000);
   }
 }
 
