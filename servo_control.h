@@ -25,9 +25,9 @@ typedef enum
 /* Public macro --------------------------------------------------------------*/
 /* Public variables ----------------------------------------------------------*/
 /* Public function prototypes ------------------------------------------------*/
-void ServoModule_Init(void);
-bool SetServoAngle(SERVO_NAME servo, UINT16 angle);
-void DeassertServoOutputs(void);
-void AssertServoOutputs(void);
+extern void ServoModule_Init(void);
+extern bool SetServoAngle(SERVO_NAME servo, UINT16 angle);
+extern void DeassertServoOutputs(void);
+extern void AssertServoOutputs(void);
 
 #endif /* __SERVO_CONTROL_H */

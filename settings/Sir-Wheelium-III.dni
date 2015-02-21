@@ -43,8 +43,6 @@ Enabled=0
 ShowSource=1
 [watch_formats]
 Fmt0={W}0:LED1	4	0
-[Breakpoints]
-Count=0
 [Log file]
 LoggingEnabled=_ 0
 LogFile=_ ""
@@ -52,6 +50,10 @@ Category=_ 0
 [TermIOLog]
 LoggingEnabled=_ 0
 LogFile=_ ""
+[Breakpoints]
+Count=0
 [Aliases]
 Count=0
 SuppressDialog=0
+[DebuggerSettings]
+DisableInterruptsWhenStepping=0
