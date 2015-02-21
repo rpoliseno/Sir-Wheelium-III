@@ -30,6 +30,7 @@
 #include "stm8_eval.h"
 #include "stm8_eval_lcd.h"
 #include "timing_delay.h"
+#include "servo_control.h"
 
 /** @addtogroup STM8L15x_StdPeriph_Examples
   * @{
@@ -60,6 +61,9 @@ void main(void)
   /* Init TIM2 to generate 1 ms time base update interrupt */
   TimingDelay_Init();
 
+  /* Init the servo control module */
+  ServoModule_Init();
+  
   /* Enable Interrupts */
   enableInterrupts();
 

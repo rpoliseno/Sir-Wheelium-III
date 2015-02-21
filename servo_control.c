@@ -10,6 +10,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "servo_control.h"
 #include "stm8l15x_tim1.h"
+#include "stm8l15x_gpio.h"
 
 /* Private datatypes ---------------------------------------------------------*/
 
@@ -24,6 +25,8 @@ typedef struct
    SERVO_NAME name;
    SERVO_TYPE type;
    UINT16 angle;
+   UINT16 captureCompareVal;
+   UINT8 gpio_pin;
 } SERVO_MOTOR;
 
 typedef struct
@@ -40,12 +43,20 @@ typedef struct
 #define NO_REPETITION         (0)
 #define ONE_MS_IN_TIMER_TICKS (1455)
 
+#define TIMER_INTERRUPTS      (  TIM1_IT_Update | \
+                                 TIM1_IT_CC1    | \
+                                 TIM1_IT_CC2    | \
+                                 TIM1_IT_CC3    | \
+                                 TIM1_IT_CC4)
+                              
+#define SERVO_GPIO_PORT                GPIOA
+
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 SERVO_MOTORS ServoMotors;
 /* Private function prototypes -----------------------------------------------*/
-void initTimerForServos(void);
-void setServoOutput(SERVO_MOTOR const * const motor); 
+void timerForServos_Init(void);
+void setServoOutput(SERVO_MOTOR * const motor); 
 /* Public functions-----------------------------------------------------------*/
 
 /**
@@ -53,25 +64,27 @@ void setServoOutput(SERVO_MOTOR const * const motor);
   * @param  None
   * @retval None
   */
-void InitServoModule(void)
+void ServoModule_Init(void)
 {
    UINT8 i;
    
    //initialize timer needed for servos
-   initTimerForServos();
-  
+   timerForServos_Init();
+   
    //initialize motor array
    ServoMotors = 
       (SERVO_MOTORS){
-         (SERVO_MOTOR){SERVO_LOADING,         ONE_EIGHTY_DEGREE,   0x0000},
-         (SERVO_MOTOR){SERVO_FIRING,          THREE_SIXTY_DEGREE,  0x0000},
-         (SERVO_MOTOR){SERVO_HORIZONTAL_AIM,  THREE_SIXTY_DEGREE,  0x7FFF},
-         (SERVO_MOTOR){SERVO_VERTICLE_AIM,    ONE_EIGHTY_DEGREE,   0x3FFF}
+         (SERVO_MOTOR){SERVO_LOADING,         ONE_EIGHTY_DEGREE,   0x0000, 0, GPIO_Pin_2},
+         (SERVO_MOTOR){SERVO_FIRING,          THREE_SIXTY_DEGREE,  0x0000, 0, GPIO_Pin_3},
+         (SERVO_MOTOR){SERVO_HORIZONTAL_AIM,  THREE_SIXTY_DEGREE,  0x7FFF, 0, GPIO_Pin_4},
+         (SERVO_MOTOR){SERVO_VERTICLE_AIM,    ONE_EIGHTY_DEGREE,   0x3FFF, 0, GPIO_Pin_5}
       };
   
    //send servos to their initial positions
    for(i = 0; i < NUM_SERVO_MOTORS; i++)
    {
+      //initialize the appropriate outputs
+      GPIO_Init(SERVO_GPIO_PORT, ServoMotors.Motors[i].gpio_pin, GPIO_Mode_Out_PP_High_Fast);
       setServoOutput(&(ServoMotors.Motors[i]));
    }
 }
@@ -82,9 +95,9 @@ void InitServoModule(void)
   *         UINT16 angle
   * @retval FALSE if the angle was invalid for the motor specified, otherwise TRUE
   */
-BOOLEAN SetServoAngle(SERVO_NAME servo, UINT16 angle)
+bool SetServoAngle(SERVO_NAME servo, UINT16 angle)
 {
-  BOOLEAN retVal = FALSE;
+  bool retVal = FALSE;
   
   //only send the motor to the level if it is valid for this motor type
   if ((ServoMotors.Motors[servo].type == THREE_SIXTY_DEGREE) ||
@@ -98,14 +111,46 @@ BOOLEAN SetServoAngle(SERVO_NAME servo, UINT16 angle)
   return retVal;
 }
 
+/**
+  * @brief  Set the angle for a specific servo motor
+  * @param  SERVO_NAME servo
+  *         UINT16 angle
+  * @retval FALSE if the angle was invalid for the motor specified, otherwise TRUE
+  */
+void DeassertServoOutputs(void)
+{
+   UINT8 i = 0;
+   
+   //Deassert the appropriate outputs
+   for (i=0; i<NUM_SERVO_MOTORS; i++)
+   {
+      if (TIM1_GetCounter() >= ServoMotors.Motors[i].captureCompareVal)
+      {
+         //the timer has passed the capture value for this servo; disassert the output
+         SERVO_GPIO_PORT->ODR &= (UINT8)~ServoMotors.Motors[i].gpio_pin;
+      }
+   }
+}
+
+void AssertServoOutputs(void)
+{
+   UINT8 i = 0;
+   
+   //assert all outputs
+   for (i=0; i<NUM_SERVO_MOTORS; i++)
+   {
+      SERVO_GPIO_PORT->ODR |= (UINT8)ServoMotors.Motors[i].gpio_pin;
+   }   
+}
+
 /* Private function ----------------------------------------------------------*/
 
 /**
-  * @brief  Sets timer value for specified motor based on angle and motor type
-  * @param  SERVO_MOTOR const * const motor
+  * @brief  Initializes Timer1 and enables the appropriate interrupts
+  * @param  
   * @retval 
   */
-void initTimerForServos(void)
+void timerForServos_Init(void)
 {
   //enable timer
   CLK_PeripheralClockConfig(CLK_Peripheral_TIM1, ENABLE);
@@ -115,8 +160,8 @@ void initTimerForServos(void)
                     TIM1_CounterMode_Up, 
                     (UINT16)FOURTY_TWO_MS, 
                     (UINT8)NO_REPETITION);
-  //enable the interrupt
-  TIM1_ITConfig(TIM1_IT_Update);
+  //enable the interrupts
+  TIM1_ITConfig((TIM1_IT_TypeDef)TIMER_INTERRUPTS , ENABLE);
   //enable the timer
   TIM1_Cmd(ENABLE);
 }
@@ -126,7 +171,7 @@ void initTimerForServos(void)
   * @param  SERVO_MOTOR const * const motor
   * @retval 
   */
-void setServoOutput(SERVO_MOTOR const * const motor)
+void setServoOutput(SERVO_MOTOR * const motor)
 {
    UINT32 temp32 = 0;
    UINT16 captureCompareValue = 0;
@@ -148,6 +193,8 @@ void setServoOutput(SERVO_MOTOR const * const motor)
    //the first mS is required to be high
    captureCompareValue += (UINT16)ONE_MS_IN_TIMER_TICKS;
    
+   motor->captureCompareVal = captureCompareValue;
+   
    //set the appropriate capture compare value
    switch (motor->name)
    {
@@ -156,22 +203,22 @@ void setServoOutput(SERVO_MOTOR const * const motor)
          TIM1_SetCompare1(captureCompareValue);
       }
       break;
-      case SERVO_LOADING:
+      case SERVO_FIRING:
       {
          TIM1_SetCompare2(captureCompareValue);
       }
       break;
-      case SERVO_LOADING:
+      case SERVO_HORIZONTAL_AIM:
       {
          TIM1_SetCompare3(captureCompareValue);
       }
       break;
-      case SERVO_LOADING:
+      case SERVO_VERTICLE_AIM:
       {
          TIM1_SetCompare4(captureCompareValue);
       }
       break;
-      default
+      default:
       {
         //just something to breakpoint on
         //we should never reach this

@@ -30,6 +30,7 @@
 #include "stm8l15x_it.h"
 #include "stm8_eval_lcd.h"
 #include "timing_delay.h"
+#include "servo_control.h"
 
 /** @addtogroup STM8L15x_StdPeriph_Examples
   * @{
@@ -432,6 +433,7 @@ INTERRUPT_HANDLER(TIM1_UPD_OVF_TRG_COM_IRQHandler, 23)
   /* In order to detect unexpected events during development,
      it is recommended to set a breakpoint on the following instruction.
   */
+  AssertServoOutputs();
 }
 /**
   * @brief TIM1 Capture/Compare Interrupt routine.
@@ -443,6 +445,7 @@ INTERRUPT_HANDLER(TIM1_CC_IRQHandler, 24)
   /* In order to detect unexpected events during development,
      it is recommended to set a breakpoint on the following instruction.
   */
+  DeassertServoOutputs();
 }
 
 /**
