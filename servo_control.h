@@ -1,0 +1,30 @@
+/**
+  ******************************************************************************
+  * @file    servo_control.h
+  * @author  Mike Barber
+  * @date    21-February-2015
+  * @brief   
+  ******************************************************************************
+*/
+#ifndef __SERVO_CONTROL_H
+#define __SERVO_CONTROL_H
+
+/* Includes ------------------------------------------------------------------*/
+#include "Sir_Wheelium_III.h"
+
+/* Public datatypes ----------------------------------------------------------*/
+typedef enum
+{
+   SERVO_LOADING = 0,
+   SERVO_FIRING,
+   SERVO_HORIZONTAL_AIM,
+   SERVO_VERTICLE_AIM,
+   NUM_SERVO_MOTORS
+} SERVO_NAME;
+
+/* Public macro --------------------------------------------------------------*/
+/* Public variables ----------------------------------------------------------*/
+/* Public function prototypes ------------------------------------------------*/
+BOOLEAN SetServoAngle(SERVO_NAME servo, UINT16 angle);
+
+#endif /* __SERVO_CONTROL_H */
