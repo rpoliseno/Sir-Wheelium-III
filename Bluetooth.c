@@ -12,7 +12,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm8l15x.h"
-#include "stm8_eval.h"
+#include "stm8l1526_eval.h"
 
 
 
