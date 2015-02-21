@@ -147,7 +147,7 @@
         </option>
         <option>
           <name>IccOptLevel</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccOptStrategy</name>
@@ -156,7 +156,7 @@
         </option>
         <option>
           <name>IccOptLevelSlave</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccOptAllowList</name>
@@ -1608,6 +1608,12 @@
   </file>
   <file>
     <name>$PROJ_DIR$\STM8L15x-16x-05x-AL31-L_StdPeriph_Lib\Utilities\STM8_EVAL\stm8_eval.h</name>
+  </file>
+  <file>
+    <name>$PROJ_DIR$\STM8L15x-16x-05x-AL31-L_StdPeriph_Lib\Utilities\STM8_EVAL\Common\stm8_eval_lcd.c</name>
+  </file>
+  <file>
+    <name>$PROJ_DIR$\STM8L15x-16x-05x-AL31-L_StdPeriph_Lib\Utilities\STM8_EVAL\Common\stm8_eval_lcd.h</name>
   </file>
   <file>
     <name>$PROJ_DIR$\STM8L15x-16x-05x-AL31-L_StdPeriph_Lib\Utilities\STM8_EVAL\STM8L1526_EVAL\stm8l1526_eval.c</name>
