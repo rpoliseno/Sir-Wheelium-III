@@ -30,6 +30,7 @@
 #include "stm8_eval.h"
 #include "stm8_eval_lcd.h"
 #include "timing_delay.h"
+#include "MotorControl.h"
 
 /** @addtogroup STM8L15x_StdPeriph_Examples
   * @{
@@ -59,6 +60,9 @@ void main(void)
 
   /* Init TIM2 to generate 1 ms time base update interrupt */
   TimingDelay_Init();
+  
+  // Initialize motor control drivers
+  MotorControl_Init();
 
   /* Enable Interrupts */
   enableInterrupts();
