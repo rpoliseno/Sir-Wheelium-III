@@ -10,14 +10,9 @@
 #define __SIR_WHEELIUM_III_H
 
 /* Includes ------------------------------------------------------------------*/
+#include "stm8l15x.h"
 
 /* Public Data Types ---------------------------------------------------------*/
-typedef enum
-{
-   FALSE = 0,
-   TRUE
-} BOOLEAN;
-
 #define UINT8     unsigned char
 #define UINT16    unsigned short
 #define UINT32    unsigned long
