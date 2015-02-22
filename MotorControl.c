@@ -31,10 +31,8 @@
  */
 
 // GPIO defines
-#define TOP_MOTOR_GPIO_PORT         GPIOB
+#define MOTOR_GPIO_PORT             GPIOB
 #define TOP_MOTOR_GPIO_PIN          GPIO_Pin_1
-
-#define BOTTOM_MOTOR_GPIO_PORT      GPIOB
 #define BOTTOM_MOTOR_GPIO_PIN       GPIO_Pin_2
 
 // Timer Defines
@@ -192,15 +190,15 @@ static void updateMotorSpeed(void)
    
    // Set the CCR registers to update speed on each motor
    TIM3_ClearITPendingBit(TIM3_IT_CC1);
-   Tim3_SetCompare1(motor.topMotorSpeed);
+   TIM3_SetCompare1(motor.topMotorSpeed);
    TIM3_ClearITPendingBit(TIM3_IT_CC2);
-   Tim3_SetCompare2(motor.bottomMotorSpeed);
+   TIM3_SetCompare2(motor.bottomMotorSpeed);
 }
 
 static void GPIO_Config(void)
 {
   /* GPIOB configuration: TIM3 channel 1 (PB1) and channel 2 (PB2)*/
-  GPIO_Init(GPIOB, (GPIO_Pin_1 | GPIO_Pin_2), GPIO_Mode_Out_PP_Low_Fast);
+  GPIO_Init(MOTOR_GPIO_PORT, (TOP_MOTOR_GPIO_PIN | BOTTOM_MOTOR_GPIO_PIN), GPIO_Mode_Out_PP_Low_Fast);
 }
 
 static void TIM3_Config(void)
@@ -212,7 +210,7 @@ static void TIM3_Config(void)
   - TIM3 counter clock = TIM3CLK / TIM3_PRESCALER+1 = 2 MHz/1+1 = 1 MHz
   */
   /* Time base configuration */
-  TIM3_TimeBaseInit(TIM3_PRESCALER, TIM3_CounterMode_Up, TIM3_PERIOD);
+  TIM3_TimeBaseInit((TIM3_Prescaler_TypeDef)TIM3_PRESCALER, TIM3_CounterMode_Up, (uint16_t)TIM3_PERIOD);
 
   /*
   - The TIM3 CCR1 register value is equal to 32768: 
@@ -246,7 +244,6 @@ static void TIM3_Config(void)
   /* TIM3 Interrupt enable */
   TIM3_ITConfig(TIM3_IT_CC1, ENABLE);
   TIM3_ITConfig(TIM3_IT_CC2, ENABLE);
-  enableInterrupts();
 
   /* Enable TIM3 outputs */
   TIM3_CtrlPWMOutputs(ENABLE);
