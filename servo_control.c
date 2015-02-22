@@ -195,16 +195,12 @@ void setServoOutput(SERVO_MOTOR * const motor)
    {
       case SERVO_LOADING:
       {
-         TIM1_CCxCmd(TIM1_Channel_1, DISABLE);
          TIM1_SetCompare1(motor->captureCompareVal);
-         TIM1_CCxCmd(TIM1_Channel_1, ENABLE);
       }
       break;
       case SERVO_FIRING:
       {
-         TIM1_CCxCmd(TIM1_Channel_2, DISABLE);
          TIM1_SetCompare2(motor->captureCompareVal);
-         TIM1_CCxCmd(TIM1_Channel_2, ENABLE);
       }
       break;
       case SERVO_HORIZONTAL_AIM:
