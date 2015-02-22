@@ -66,9 +66,6 @@ SIR_WHEELIUM_CMD Bluetooth__GetCommand()
   return CMD;
 }
 
-
-
-
 /*
 *\brief Adding command to FIFO
 */
