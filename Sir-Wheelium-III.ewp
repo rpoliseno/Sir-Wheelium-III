@@ -1604,10 +1604,10 @@
     <name>$PROJ_DIR$\Bluetooth.h</name>
   </file>
   <file>
-    <name>$PROJ_DIR$\STM8L15x-16x-05x-AL31-L_StdPeriph_Lib\Libraries\STM8L15x_StdPeriph_Driver\src\HelperFunctions.c</name>
+    <name>$PROJ_DIR$\HelperFunctions.c</name>
   </file>
   <file>
-    <name>$PROJ_DIR$\STM8L15x-16x-05x-AL31-L_StdPeriph_Lib\Libraries\STM8L15x_StdPeriph_Driver\src\HelperFunctions.h</name>
+    <name>$PROJ_DIR$\HelperFunctions.h</name>
   </file>
   <file>
     <name>$PROJ_DIR$\main.c</name>

@@ -42,9 +42,8 @@
 #define TIM3_PRESCALER              (1)
 
 #define MOTOR_CONTROL_MAX_SPEED     (0xFFFF)
-#define MOTOR_CONTROL_MIN_SPEED     (0x0000)
 //Minimum Motor speed is 30% of 0xFFFF
-//#define MOTOR_CONTROL_MIN_SPEED     (0x4CCC)
+#define MOTOR_CONTROL_MIN_SPEED     (0x4CCC)
 
 #define MOTOR_DEFAULT_SPEED         (MOTOR_CONTROL_MIN_SPEED)
 ///This is only 10% at HE - DEREK
@@ -123,19 +122,23 @@ void MotorControl_Init(void)
 void MotorControl_SetSpeed(uint16_t percentageTopSpeed)
 {
   //Cap the motor speeds
-  //DO NOT remove these. They may be pointless with 0 and 0xFFFF but we need to protect ourselves
-  //  incase we change these values. 
-   if(percentageTopSpeed < MOTOR_CONTROL_MIN_SPEED)
-   {
-     percentageTopSpeed = MOTOR_CONTROL_MIN_SPEED;
-   }
-   else if(percentageTopSpeed > MOTOR_CONTROL_MAX_SPEED)
-   {
-     percentageTopSpeed = MOTOR_CONTROL_MAX_SPEED;
-   }
-   
+  //We need to scale the percentage between our max and min motor speeds
+  //(((percentageTopSpeed - 1)/0xFFFF) * (MaxMotorSpeed - MinMotorSpeed)) + MinMotorSpeed
+  //e.g. 1% = (0) + MinMotorSpeed = MinMotorspeed
+  uint32_t scaledPercentage = 0; 
+  if(percentageTopSpeed > 0)
+  {
+     scaledPercentage = (uint32_t)(MOTOR_CONTROL_MAX_SPEED - MOTOR_CONTROL_MIN_SPEED);
+     scaledPercentage *= (uint32_t)percentageTopSpeed - 1;
+     scaledPercentage = scaledPercentage >> 16;
+     scaledPercentage += MOTOR_CONTROL_MIN_SPEED;
+  }
+  else
+  {
+    scaledPercentage = 0;
+  }
    //(Top Speed / 0xFFFF) * TIM3_Period = topSpeed% * Period
-   uint16_t speed = (uint16_t)((uint32_t)(((uint32_t)TIM3_PERIOD + 1) * (uint32_t)percentageTopSpeed) >> 16);
+   uint16_t speed = (uint16_t)((uint32_t)(((uint32_t)TIM3_PERIOD + 1) * scaledPercentage) >> 16);
    
    //Update the spin ofset. Remember it is a percentage
    motor.spinOffset = (DIVIDE_BY_TEN(speed));
