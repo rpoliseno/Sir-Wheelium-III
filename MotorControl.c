@@ -24,6 +24,7 @@
 #include "stm8l15x_clk.h"
 #include "stm8l15x_gpio.h"
 #include "stm8l15x_tim3.h"
+#include "HelperFunctions.h"
 
 /* =============================================================================
  *   Private Macros
@@ -31,22 +32,23 @@
  */
 
 // GPIO defines
-#define MOTOR_GPIO_PORT             GPIOB
+#define TOP_MOTOR_GPIO_PORT             GPIOB
+#define BOTTOM_MOTOR_GPIO_PORT          GPIOD
 #define TOP_MOTOR_GPIO_PIN          GPIO_Pin_1
-#define BOTTOM_MOTOR_GPIO_PIN       GPIO_Pin_2
+#define BOTTOM_MOTOR_GPIO_PIN       GPIO_Pin_0
 
 // Timer Defines
-#define TIM3_PERIOD                 (65535)
+#define TIM3_PERIOD                 (0x7FFF)
 #define TIM3_PRESCALER              (1)
 
-#define TIM5_PERIOD                 (65535)
-#define TIM5_PRESCALER              (1)
-
-#define MOTOR_CONTROL_MIN_SPEED     (0x0000)
 #define MOTOR_CONTROL_MAX_SPEED     (0xFFFF)
+#define MOTOR_CONTROL_MIN_SPEED     (0x0000)
+//Minimum Motor speed is 30% of 0xFFFF
+//#define MOTOR_CONTROL_MIN_SPEED     (0x4CCC)
 
 #define MOTOR_DEFAULT_SPEED         (MOTOR_CONTROL_MIN_SPEED)
-#define MOTOR_DEFAULT_SPIN          (6550) // ~10% spin differential
+///This is only 10% at HE - DEREK
+#define MOTOR_DEFAULT_SPIN          (DIVIDE_BY_TEN(TIM3_PERIOD)) // ~10% spin differential
 #define MOTOR_DEFAULT_SPIN_MODE     (SPIN_MODE_BACKSPIN)
 
 /* =============================================================================
@@ -120,12 +122,29 @@ void MotorControl_Init(void)
 
 void MotorControl_SetSpeed(uint16_t percentageTopSpeed)
 {
-   // bounds check top speed with spin offset to ensure it has not been set too low
-   if(motor.spinOffset > percentageTopSpeed)
+  //Cap the motor speeds
+  //DO NOT remove these. They may be pointless with 0 and 0xFFFF but we need to protect ourselves
+  //  incase we change these values. 
+   if(percentageTopSpeed < MOTOR_CONTROL_MIN_SPEED)
    {
-      percentageTopSpeed = motor.spinOffset + 1;
+     percentageTopSpeed = MOTOR_CONTROL_MIN_SPEED;
+   }
+   else if(percentageTopSpeed > MOTOR_CONTROL_MAX_SPEED)
+   {
+     percentageTopSpeed = MOTOR_CONTROL_MAX_SPEED;
+   }
+   
+   //(Top Speed / 0xFFFF) * TIM3_Period = topSpeed% * Period
+   uint16_t speed = (uint16_t)((uint32_t)(((uint32_t)TIM3_PERIOD + 1) * (uint32_t)percentageTopSpeed) >> 16);
+   
+   //Update the spin ofset. Remember it is a percentage
+   motor.spinOffset = (DIVIDE_BY_TEN(speed));
+   // bounds check top speed with spin offset to ensure it has not been set too low
+   if(motor.spinOffset > speed)
+   {
+      speed = motor.spinOffset + 1;
    }  
-   motor.speed = percentageTopSpeed;
+   motor.speed = speed + 1;
    // Update CCRs with updated info
    updateMotorSpeed();
 }
@@ -198,7 +217,8 @@ static void updateMotorSpeed(void)
 static void GPIO_Config(void)
 {
   /* GPIOB configuration: TIM3 channel 1 (PB1) and channel 2 (PB2)*/
-  GPIO_Init(MOTOR_GPIO_PORT, (TOP_MOTOR_GPIO_PIN | BOTTOM_MOTOR_GPIO_PIN), GPIO_Mode_Out_PP_Low_Fast);
+  GPIO_Init(TOP_MOTOR_GPIO_PORT, TOP_MOTOR_GPIO_PIN, GPIO_Mode_Out_PP_Low_Fast);
+  GPIO_Init(BOTTOM_MOTOR_GPIO_PORT, BOTTOM_MOTOR_GPIO_PIN, GPIO_Mode_Out_PP_Low_Fast);
 }
 
 static void TIM3_Config(void)
@@ -218,7 +238,7 @@ static void TIM3_Config(void)
   - So the TIM3 Channel 1 generates a periodic signal with a frequency equal to 15.25 Hz.
   */
   /* Toggle Mode configuration: Channel1 */
-  TIM3_OC1Init(TIM3_OCMode_Toggle, 
+  TIM3_OC1Init(TIM3_OCMode_PWM2, 
                TIM3_OutputState_Enable, 
                motor.topMotorSpeed, 
                TIM3_OCPolarity_Low,  
@@ -232,18 +252,15 @@ static void TIM3_Config(void)
   - So the TIM3 channel 2 generates a periodic signal with a frequency equal to 30.51 Hz.
   */
   /* Toggle Mode configuration: Channel2 */
-  TIM3_OC2Init(TIM3_OCMode_Toggle, 
+  TIM3_OC2Init(TIM3_OCMode_PWM2, 
                TIM3_OutputState_Enable,
                motor.bottomMotorSpeed, 
                TIM3_OCPolarity_Low,  
                TIM3_OCIdleState_Set);
+  
   TIM3_OC2PreloadConfig(DISABLE);
 
   TIM3_ARRPreloadConfig(ENABLE);
-
-  /* TIM3 Interrupt enable */
-  TIM3_ITConfig(TIM3_IT_CC1, ENABLE);
-  TIM3_ITConfig(TIM3_IT_CC2, ENABLE);
 
   /* Enable TIM3 outputs */
   TIM3_CtrlPWMOutputs(ENABLE);

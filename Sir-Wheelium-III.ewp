@@ -1604,7 +1604,25 @@
     <name>$PROJ_DIR$\Bluetooth.h</name>
   </file>
   <file>
+    <name>$PROJ_DIR$\STM8L15x-16x-05x-AL31-L_StdPeriph_Lib\Libraries\STM8L15x_StdPeriph_Driver\src\HelperFunctions.c</name>
+  </file>
+  <file>
+    <name>$PROJ_DIR$\STM8L15x-16x-05x-AL31-L_StdPeriph_Lib\Libraries\STM8L15x_StdPeriph_Driver\src\HelperFunctions.h</name>
+  </file>
+  <file>
     <name>$PROJ_DIR$\main.c</name>
+  </file>
+  <file>
+    <name>$PROJ_DIR$\MotorControl.c</name>
+  </file>
+  <file>
+    <name>$PROJ_DIR$\MotorControl.h</name>
+  </file>
+  <file>
+    <name>$PROJ_DIR$\Protocol.c</name>
+  </file>
+  <file>
+    <name>$PROJ_DIR$\Protocol.h</name>
   </file>
   <file>
     <name>$PROJ_DIR$\servo_control.c</name>
@@ -1614,12 +1632,6 @@
   </file>
   <file>
     <name>$PROJ_DIR$\Sir_Wheelium_III.h</name>
-  </file>
-  <file>
-    <name>$PROJ_DIR$\Protocol.c</name>
-  </file>
-  <file>
-    <name>$PROJ_DIR$\Protocol.h</name>
   </file>
   <file>
     <name>$PROJ_DIR$\STM8L15x-16x-05x-AL31-L_StdPeriph_Lib\Utilities\STM8_EVAL\stm8_eval.h</name>
@@ -1692,6 +1704,12 @@
   </file>
   <file>
     <name>$PROJ_DIR$\STM8L15x-16x-05x-AL31-L_StdPeriph_Lib\Libraries\STM8L15x_StdPeriph_Driver\inc\stm8l15x_tim2.h</name>
+  </file>
+  <file>
+    <name>$PROJ_DIR$\STM8L15x-16x-05x-AL31-L_StdPeriph_Lib\Libraries\STM8L15x_StdPeriph_Driver\src\stm8l15x_tim3.c</name>
+  </file>
+  <file>
+    <name>$PROJ_DIR$\STM8L15x-16x-05x-AL31-L_StdPeriph_Lib\Libraries\STM8L15x_StdPeriph_Driver\inc\stm8l15x_tim3.h</name>
   </file>
   <file>
     <name>$PROJ_DIR$\STM8L15x-16x-05x-AL31-L_StdPeriph_Lib\Libraries\STM8L15x_StdPeriph_Driver\src\stm8l15x_usart.c</name>
