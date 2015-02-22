@@ -29,5 +29,6 @@ extern void ServoModule_Init(void);
 extern bool ServoModule_SetServoAngle(UINT8 servo, UINT16 angle);
 extern void ServoModule_DeassertServoOutputs(UINT8 captureCompareNumTriggered);
 extern void ServoModule_AssertServoOutputs(void);
+extern void ServoModule_Fire(uint8_t firing_number);
 
 #endif /* __SERVO_CONTROL_H */
