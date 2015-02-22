@@ -88,7 +88,7 @@ void main(void)
   {
     /* Toggle LED4 */
     STM_EVAL_LEDToggle(LED4);
-    Delay(100);
+    Delay(1);
     Protocol__ReceivedCommand(Bluetooth__GetCommand());
       
    }
