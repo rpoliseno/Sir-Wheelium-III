@@ -27,10 +27,13 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm8l15x.h"
-#include "stm8_eval.h"
-#include "stm8_eval_lcd.h"
+#include "stm8l1526_eval.h"
+#include "stm8l1526_eval_glass_lcd.h"
 #include "timing_delay.h"
 #include "MotorControl.h"
+#include "servo_control.h"
+#include "Bluetooth.h"
+#include "Protocol.h"
 
 /** @addtogroup STM8L15x_StdPeriph_Examples
   * @{
@@ -64,6 +67,9 @@ void main(void)
   // Initialize motor control drivers
   MotorControl_Init();
 
+  /* Init the servo control module */
+  ServoModule_Init();
+  
   /* Enable Interrupts */
   enableInterrupts();
 
@@ -76,26 +82,22 @@ void main(void)
 //  STM_EVAL_PBInit(BUTTON_LEFT, BUTTON_MODE_EXTI);
 //  STM_EVAL_PBInit(BUTTON_UP, BUTTON_MODE_EXTI);
 //  STM_EVAL_PBInit(BUTTON_DOWN, BUTTON_MODE_EXTI);
-
-  /* Enable general interrupts */
-  enableInterrupts();
-
+  
+   Bluetooth__Initialize();
+   /* Enable general interrupts */
+   enableInterrupts();
+  
 
   while (1)
   {
     /* Toggle LED4 */
     STM_EVAL_LEDToggle(LED4);
+    Delay(100);
+    Protocol__ReceivedCommand(Bluetooth__GetCommand());
+      
+   }
+ }
 
-    /* Insert a delay */
-    Delay(10);
-
-    /* Toggle LED3 */
-    STM_EVAL_LEDToggle(LED3);
-
-    /* Insert a delay */
-    Delay(10);
-  }
-}
 
 /**
   * @brief  Configure System Clock 

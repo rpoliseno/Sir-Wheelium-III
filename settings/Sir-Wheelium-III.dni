@@ -9,7 +9,7 @@ TriggerName=main
 LimitSize=0
 ByteLimit=50
 [DebugChecksum]
-Checksum=2112844306
+Checksum=1191227187
 [CallStack]
 ShowArgs=0
 [Disassembly]
@@ -43,6 +43,11 @@ Enabled=0
 ShowSource=1
 [watch_formats]
 Fmt0={W}0:LED1	4	0
+[DataSample]
+LogEnabled=0
+GraphEnabled=0
+ShowTimeLog=1
+ShowTimeSum=1
 [Breakpoints]
 Count=0
 [Log file]
@@ -55,3 +60,5 @@ LogFile=_ ""
 [Aliases]
 Count=0
 SuppressDialog=0
+[DebuggerSettings]
+DisableInterruptsWhenStepping=0
