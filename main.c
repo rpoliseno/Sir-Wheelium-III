@@ -27,8 +27,8 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm8l15x.h"
-#include "stm8_eval.h"
-#include "stm8_eval_lcd.h"
+#include "stm8l1526_eval.h"
+#include "stm8l1526_eval_glass_lcd.h"
 #include "timing_delay.h"
 #include "servo_control.h"
 

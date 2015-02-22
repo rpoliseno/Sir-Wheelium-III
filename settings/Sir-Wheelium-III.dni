@@ -9,7 +9,7 @@ TriggerName=main
 LimitSize=0
 ByteLimit=50
 [DebugChecksum]
-Checksum=205714047
+Checksum=1191227187
 [CallStack]
 ShowArgs=0
 [Disassembly]
@@ -41,8 +41,6 @@ ActionState=1
 [Trace1]
 Enabled=0
 ShowSource=1
-[struct_types]
-Fmt0=SERVO_MOTOR-captureCompareVal	4	0
 [watch_formats]
 Fmt0={W}0:LED1	4	0
 [DataSample]
