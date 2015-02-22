@@ -433,7 +433,7 @@ INTERRUPT_HANDLER(TIM1_UPD_OVF_TRG_COM_IRQHandler, 23)
   /* In order to detect unexpected events during development,
      it is recommended to set a breakpoint on the following instruction.
   */
-  AssertServoOutputs();
+  ServoModule_AssertServoOutputs();
   TIM1_ClearFlag(TIM1_FLAG_Update);
 }
 /**
@@ -448,22 +448,22 @@ INTERRUPT_HANDLER(TIM1_CC_IRQHandler, 24)
   */
    if (IS_TIM1_EVENT_SOURCE(TIM1_EventSource_CC1))
    {
-      DeassertServoOutputs(SERVO_LOADING);
+      ServoModule_DeassertServoOutputs(SERVO_LOADING);
       TIM1_ClearFlag(TIM1_FLAG_CC1);
    }
    if (IS_TIM1_EVENT_SOURCE(TIM1_EventSource_CC2))
    {
-      DeassertServoOutputs(SERVO_FIRING);
+      ServoModule_DeassertServoOutputs(SERVO_FIRING);
       TIM1_ClearFlag(TIM1_FLAG_CC2);
    }
    if (IS_TIM1_EVENT_SOURCE(TIM1_EventSource_CC3))
    {
-      DeassertServoOutputs(SERVO_HORIZONTAL_AIM);
+      ServoModule_DeassertServoOutputs(SERVO_HORIZONTAL_AIM);
       TIM1_ClearFlag(TIM1_FLAG_CC3);
    }
    if (IS_TIM1_EVENT_SOURCE(TIM1_EventSource_CC4))
    {
-      DeassertServoOutputs(SERVO_VERTICLE_AIM);
+      ServoModule_DeassertServoOutputs(SERVO_VERTICLE_AIM);
       TIM1_ClearFlag(TIM1_FLAG_CC4);
    }
 }

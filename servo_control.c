@@ -95,7 +95,7 @@ void ServoModule_Init(void)
   *         UINT16 angle
   * @retval FALSE if the angle was invalid for the motor specified, otherwise TRUE
   */
-bool SetServoAngle(SERVO_NAME servo, UINT16 angle)
+bool ServoModule_SetServoAngle(SERVO_NAME servo, UINT16 angle)
 {
   bool retVal = FALSE;
   
@@ -112,17 +112,21 @@ bool SetServoAngle(SERVO_NAME servo, UINT16 angle)
 }
 
 /**
-  * @brief  Set the angle for a specific servo motor
-  * @param  SERVO_NAME servo
-  *         UINT16 angle
-  * @retval FALSE if the angle was invalid for the motor specified, otherwise TRUE
+  * @brief  Deassert the specified output
+  * @param  
+  * @retval 
   */
-void DeassertServoOutputs(UINT8 captureCompareNumTriggered)
+void ServoModule_DeassertServoOutputs(UINT8 captureCompareNumTriggered)
 {
   SERVO_GPIO_PORT->ODR &= (UINT8)~ServoMotors.Motors[captureCompareNumTriggered].gpio_pin;
 }
 
-void AssertServoOutputs(void)
+/**
+  * @brief  Assert all of the servo outputs
+  * @param  
+  * @retval 
+  */
+void ServoModule_AssertServoOutputs(void)
 {
    UINT8 i = 0;
    
