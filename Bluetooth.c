@@ -89,42 +89,54 @@ void addCommandToFifo(SIR_WHEELIUM_CMD addedCMD)
 */
 void Bluetooth__RxInterrupt()
 {
-  uint8_t readData;
-  static uint8_t RxIndex = 0;
-  static SIR_WHEELIUM_CMD RxCommand;
+   uint8_t readData;
+   static uint8_t RxIndex = 0;
+   static SIR_WHEELIUM_CMD RxCommand;
+
+   //Received Byte
+   if(USART_GetITStatus(USART1, USART_IT_RXNE))
+   {
+      USART_ClearITPendingBit(USART1,USART_IT_RXNE);
+
+      //read 1 byte and fill in the SIR_WHEELIAM_CMD
+      readData = USART_ReceiveData8(USART1);
+      switch(RxIndex)
+      {
+         case 0:
+         {
+            RxCommand.CMD = readData;
+            break;
+         }
+         case 1:
+         case 2:
+         case 3:
+         case 4:
+         case 5:
+         {
+            RxCommand.DATA[RxIndex - 1] = readData;
+            //Lets reset the Index on the last byte of the comand
+            //Add command to the FIFO
+
+            break;
+         }
+         default:
+         {
+            RxIndex = 0;
+            break;
+         }
+      }
+      
+      if(RxIndex >= 5)
+      {
+         RxIndex = 0;
+         addCommandToFifo(RxCommand);
+      }
+      else
+      {
+         RxIndex++;
+      }
+   }
   
-  //Received Byte
-  if(USART_GetITStatus(USART1, USART_IT_RXNE))
-  {
-    USART_ClearITPendingBit(USART1,USART_IT_RXNE);
-    
-    //while there is information
-    readData = USART_ReceiveData8(USART1);
-    switch(RxIndex++)
-    {
-       case 0:
-         {
-           RxCommand.CMD = readData;
-           break;
-         }
-       case 1:
-       case 2:
-       case 3:
-       case 4:
-       case 5:
-         {
-           RxCommand.DATA[RxIndex -2] = readData;
-           //Lets reset the Index on the last byte of the comand
-           //Add command to the FIFO
-           if(RxIndex >= 6)
-           {
-             RxIndex = 0;
-             addCommandToFifo(RxCommand);
-           }
-           break;
-         }
-    }
-  }
   //RX line has gone IDLE
   else if(USART_GetITStatus(USART1, USART_IT_IDLE))
   {
