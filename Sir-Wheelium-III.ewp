@@ -265,7 +265,7 @@
           <state>$PROJ_DIR$\STM8L15x-16x-05x-AL31-L_StdPeriph_Lib\Utilities\Misc</state>
           <state>$PROJ_DIR$\STM8L15x-16x-05x-AL31-L_StdPeriph_Lib\Libraries\STM8L15x_StdPeriph_Driver\inc</state>
           <state>$PROJ_DIR$\STM8L15x-16x-05x-AL31-L_StdPeriph_Lib\Libraries\STM8L15x_StdPeriph_Driver\src</state>
-          <state>C:\Users\dthrasher\Documents\Sir-Wheelium-III\STM8L15x-16x-05x-AL31-L_StdPeriph_Lib\Utilities\STM8_EVAL\STM8L1526_EVAL</state>
+          <state>$PROJ_DIR$\STM8L15x-16x-05x-AL31-L_StdPeriph_Lib\Utilities\STM8_EVAL\STM8L1526_EVAL</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1607,6 +1607,15 @@
     <name>$PROJ_DIR$\main.c</name>
   </file>
   <file>
+    <name>$PROJ_DIR$\servo_control.c</name>
+  </file>
+  <file>
+    <name>$PROJ_DIR$\servo_control.h</name>
+  </file>
+  <file>
+    <name>$PROJ_DIR$\Sir_Wheelium_III.h</name>
+  </file>
+  <file>
     <name>$PROJ_DIR$\Protocol.c</name>
   </file>
   <file>
@@ -1671,6 +1680,12 @@
   </file>
   <file>
     <name>$PROJ_DIR$\STM8L15x-16x-05x-AL31-L_StdPeriph_Lib\Libraries\STM8L15x_StdPeriph_Driver\inc\stm8l15x_syscfg.h</name>
+  </file>
+  <file>
+    <name>$PROJ_DIR$\STM8L15x-16x-05x-AL31-L_StdPeriph_Lib\Libraries\STM8L15x_StdPeriph_Driver\src\stm8l15x_tim1.c</name>
+  </file>
+  <file>
+    <name>$PROJ_DIR$\STM8L15x-16x-05x-AL31-L_StdPeriph_Lib\Libraries\STM8L15x_StdPeriph_Driver\inc\stm8l15x_tim1.h</name>
   </file>
   <file>
     <name>$PROJ_DIR$\STM8L15x-16x-05x-AL31-L_StdPeriph_Lib\Libraries\STM8L15x_StdPeriph_Driver\src\stm8l15x_tim2.c</name>

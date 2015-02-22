@@ -6,6 +6,7 @@
 
 //Includes
 #include "Protocol.h"
+#include "servo_control.h"
 
 /*
 * \brief Process received Commands
@@ -24,7 +25,7 @@ void Protocol__ReceivedCommand(SIR_WHEELIUM_CMD nextCommand)
       }
       case COMMAND_ADJUST_ANGLE:
       {
-        
+        ServoModule_SetServoAngle(nextCommand.DATA[0], (UINT16)((UINT16)(nextCommand.DATA[1] << 8) | (nextCommand.DATA[2])));
         break;
       }
       case COMMAND_LAUNCH:

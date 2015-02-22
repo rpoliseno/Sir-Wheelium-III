@@ -30,6 +30,7 @@
 #include "stm8l1526_eval.h"
 #include "stm8l1526_eval_glass_lcd.h"
 #include "timing_delay.h"
+#include "servo_control.h"
 #include "Bluetooth.h"
 #include "Protocol.h"
 
@@ -62,6 +63,9 @@ void main(void)
   /* Init TIM2 to generate 1 ms time base update interrupt */
   TimingDelay_Init();
 
+  /* Init the servo control module */
+  ServoModule_Init();
+  
   /* Enable Interrupts */
   enableInterrupts();
 
