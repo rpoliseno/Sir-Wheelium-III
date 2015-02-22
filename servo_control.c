@@ -77,7 +77,7 @@ void ServoModule_Init(void)
    //initialize motor array
    ServoMotors = 
       (SERVO_MOTORS){
-         (SERVO_MOTOR){SERVO_LOADING,         ONE_EIGHTY_DEGREE,   0x0000, 0, GPIO_Pin_3},   //currently unused
+         (SERVO_MOTOR){SERVO_LOADING,         THREE_SIXTY_DEGREE,  0x0000, 0, GPIO_Pin_3},   //currently unused
          (SERVO_MOTOR){SERVO_FIRING,          ONE_EIGHTY_DEGREE,   0x0000, 0, GPIO_Pin_2},
          (SERVO_MOTOR){SERVO_HORIZONTAL_AIM,  THREE_SIXTY_DEGREE,  0x7FFF, 0, GPIO_Pin_4},
          (SERVO_MOTOR){SERVO_VERTICLE_AIM,    ONE_EIGHTY_DEGREE,   0x3FFF, 0, GPIO_Pin_5}
@@ -145,11 +145,11 @@ void ServoModule_AssertServoOutputs(void)
   * @param  uint8_t firing_number
   * @retval 
   */
-extern void ServoModule_Fire(uint8_t firing_number)
+extern void ServoModule_Fire(uint8_t numberToFire)
 {
    uint8_t i = 0;
    
-   for(i=0; i<firing_number; i++)
+   for(i=0; i<numberToFire; i++)
    {
      //we should have a ball loaded into the barrel already
      ServoModule_SetServoAngle((uint8_t)SERVO_FIRING, FIRING_SERVO_FIRING_POSITION);
