@@ -31,11 +31,11 @@
  */
 
 // GPIO defines
-#define TOP_MOTOR_GPIO_PORT
-#define TOP_MOTOR_GPIO_PIN
+#define TOP_MOTOR_GPIO_PORT         GPIOB
+#define TOP_MOTOR_GPIO_PIN          GPIO_Pin_1
 
-#define BOTTOM_MOTOR_GPIO_PORT
-#define BOTTOM_MOTOR_GPIO_PIN
+#define BOTTOM_MOTOR_GPIO_PORT      GPIOB
+#define BOTTOM_MOTOR_GPIO_PIN       GPIO_Pin_2
 
 // Timer Defines
 #define TIM3_PERIOD                 (65535)
@@ -44,9 +44,10 @@
 #define TIM5_PERIOD                 (65535)
 #define TIM5_PRESCALER              (1)
 
+#define MOTOR_CONTROL_MIN_SPEED     (0x0000)
 #define MOTOR_CONTROL_MAX_SPEED     (0xFFFF)
 
-#define MOTOR_DEFAULT_SPEED         (MOTOR_CONTROL_MAX_SPEED)
+#define MOTOR_DEFAULT_SPEED         (MOTOR_CONTROL_MIN_SPEED)
 #define MOTOR_DEFAULT_SPIN          (6550) // ~10% spin differential
 #define MOTOR_DEFAULT_SPIN_MODE     (SPIN_MODE_BACKSPIN)
 
@@ -109,7 +110,7 @@ static void updateMotorSpeed(void);
 void MotorControl_Init(void)
 {
    // Default Motor Settings
-   motor.topMotorSpeed = MOTOR_DEFAULT_SPEED - MOTOR_DEFAULT_SPIN;
+   motor.topMotorSpeed = MOTOR_DEFAULT_SPEED;
    motor.bottomMotorSpeed = MOTOR_DEFAULT_SPEED;
    motor.spinOffset = MOTOR_DEFAULT_SPIN;
    motor.spinMode = MOTOR_DEFAULT_SPIN_MODE;
@@ -121,7 +122,7 @@ void MotorControl_Init(void)
 
 void MotorControl_SetSpeed(uint16_t percentageTopSpeed)
 {
-   // bounds check top speed with spin offset
+   // bounds check top speed with spin offset to ensure it has not been set too low
    if(motor.spinOffset > percentageTopSpeed)
    {
       percentageTopSpeed = motor.spinOffset + 1;
@@ -190,7 +191,9 @@ static void updateMotorSpeed(void)
    }
    
    // Set the CCR registers to update speed on each motor
+   TIM3_ClearITPendingBit(TIM3_IT_CC1);
    Tim3_SetCompare1(motor.topMotorSpeed);
+   TIM3_ClearITPendingBit(TIM3_IT_CC2);
    Tim3_SetCompare2(motor.bottomMotorSpeed);
 }
 
