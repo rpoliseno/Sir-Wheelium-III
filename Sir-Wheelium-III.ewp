@@ -1607,6 +1607,12 @@
     <name>$PROJ_DIR$\main.c</name>
   </file>
   <file>
+    <name>$PROJ_DIR$\Protocol.c</name>
+  </file>
+  <file>
+    <name>$PROJ_DIR$\Protocol.h</name>
+  </file>
+  <file>
     <name>$PROJ_DIR$\STM8L15x-16x-05x-AL31-L_StdPeriph_Lib\Utilities\STM8_EVAL\stm8_eval.h</name>
   </file>
   <file>
@@ -1671,6 +1677,12 @@
   </file>
   <file>
     <name>$PROJ_DIR$\STM8L15x-16x-05x-AL31-L_StdPeriph_Lib\Libraries\STM8L15x_StdPeriph_Driver\inc\stm8l15x_tim2.h</name>
+  </file>
+  <file>
+    <name>$PROJ_DIR$\STM8L15x-16x-05x-AL31-L_StdPeriph_Lib\Libraries\STM8L15x_StdPeriph_Driver\src\stm8l15x_usart.c</name>
+  </file>
+  <file>
+    <name>$PROJ_DIR$\STM8L15x-16x-05x-AL31-L_StdPeriph_Lib\Libraries\STM8L15x_StdPeriph_Driver\inc\stm8l15x_usart.h</name>
   </file>
   <file>
     <name>$PROJ_DIR$\STM8L15x-16x-05x-AL31-L_StdPeriph_Lib\Utilities\Misc\timing_delay.c</name>

@@ -30,6 +30,8 @@
 #include "stm8l1526_eval.h"
 #include "stm8l1526_eval_glass_lcd.h"
 #include "timing_delay.h"
+#include "Bluetooth.h"
+#include "Protocol.h"
 
 /** @addtogroup STM8L15x_StdPeriph_Examples
   * @{
@@ -72,26 +74,22 @@ void main(void)
 //  STM_EVAL_PBInit(BUTTON_LEFT, BUTTON_MODE_EXTI);
 //  STM_EVAL_PBInit(BUTTON_UP, BUTTON_MODE_EXTI);
 //  STM_EVAL_PBInit(BUTTON_DOWN, BUTTON_MODE_EXTI);
-
-  /* Enable general interrupts */
-  enableInterrupts();
-
+  
+   Bluetooth__Initialize();
+   /* Enable general interrupts */
+   enableInterrupts();
+  
 
   while (1)
   {
     /* Toggle LED4 */
     STM_EVAL_LEDToggle(LED4);
+    Delay(100);
+    Protocol__ReceivedCommand(Bluetooth__GetCommand());
+      
+   }
+ }
 
-    /* Insert a delay */
-    Delay(10);
-
-    /* Toggle LED3 */
-    STM_EVAL_LEDToggle(LED3);
-
-    /* Insert a delay */
-    Delay(1000);
-  }
-}
 
 /**
   * @brief  Configure System Clock 

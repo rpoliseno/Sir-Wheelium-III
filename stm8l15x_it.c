@@ -30,7 +30,7 @@
 #include "stm8l15x_it.h"
 #include "stm8_eval_lcd.h"
 #include "timing_delay.h"
-
+#include "Bluetooth.h"
 /** @addtogroup STM8L15x_StdPeriph_Examples
   * @{
   */
@@ -475,9 +475,6 @@ INTERRUPT_HANDLER(SPI1_IRQHandler, 26)
   */
 INTERRUPT_HANDLER(USART1_TX_TIM5_UPD_OVF_TRG_BRK_IRQHandler, 27)
 {
-  /* In order to detect unexpected events during development,
-     it is recommended to set a breakpoint on the following instruction.
-  */
 }
 
 /**
@@ -487,9 +484,7 @@ INTERRUPT_HANDLER(USART1_TX_TIM5_UPD_OVF_TRG_BRK_IRQHandler, 27)
   */
 INTERRUPT_HANDLER(USART1_RX_TIM5_CC_IRQHandler, 28)
 {
-  /* In order to detect unexpected events during development,
-     it is recommended to set a breakpoint on the following instruction.
-  */
+  Bluetooth__RxInterrupt();
 }
 
 /**
