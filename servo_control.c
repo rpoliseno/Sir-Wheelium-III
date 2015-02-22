@@ -38,7 +38,7 @@ typedef struct
 #define ONE_EIGHTY_DEGREES (0x7FFF)
 
 //Defines for servo timing requirements
-#define PRESCALER             (0x000B)
+#define PRESCALER             (0x000A)
 #define FOURTY_TWO_MS         (61091)
 #define NO_REPETITION         (0)
 #define ONE_MS_IN_TIMER_TICKS (1455)
