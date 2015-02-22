@@ -14,10 +14,9 @@
 #include "Bluetooth.h"
 
 //Commands!
-#define COMMAND_ADJUST_SPEED  (0x30)
-#define COMMAND_ADJUST_ANGLE  (0x31)
-#define COMMAND_LAUNCH        (0x32)
-
+#define COMMAND_ADJUST_SPEED        (0x02)
+#define COMMAND_ADJUST_ANGLE        (0x03)
+#define COMMAND_LAUNCH              (0x04)
 
 //Global Functions
 extern void Protocol__ReceivedCommand(SIR_WHEELIUM_CMD nextCommand);

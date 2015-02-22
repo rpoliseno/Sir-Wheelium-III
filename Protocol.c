@@ -22,7 +22,7 @@ void Protocol__ReceivedCommand(SIR_WHEELIUM_CMD nextCommand)
          }
       case COMMAND_ADJUST_SPEED:
       {
-        MotorControl_SetSpeed((UINT16)((UINT16)(nextCommand.DATA[0] << 8) | (nextCommand.DATA[1])));
+        MotorControl_SetSpeed((MOTOR_TYPES)(nextCommand.DATA[0]), (UINT16)((UINT16)(nextCommand.DATA[1] << 8) | (nextCommand.DATA[2])));
         break;
       }
       case COMMAND_ADJUST_ANGLE:
@@ -34,13 +34,9 @@ void Protocol__ReceivedCommand(SIR_WHEELIUM_CMD nextCommand)
       {
         break;
       }
-       case 0x33:
-         {
-           break;
-         }
-       default:
-         {
-           break;
-         }
+      default:
+      {
+        break;
+      }
     }
 }

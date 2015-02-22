@@ -36,11 +36,10 @@
  */
 typedef enum
 {
-   SPIN_MODE_BACKSPIN = 0,
-   SPIN_MODE_TOPSPIN,
-   SPIN_MODE_NEUTRAL,
-   SPIN_MODE_NUM_SPIN_MODES
-} MOTOR_CONTROL_SPIN_MODE;
+   MOTOR_TYPE_TOP = 0,
+   MOTOR_TYPE_BOTTOM,
+   NUM_MOTOR_TYPES
+} MOTOR_TYPES;
 
 /* =============================================================================
  *   Public Constants
@@ -53,10 +52,7 @@ typedef enum
  */
 
 void MotorControl_Init(void);
-void MotorControl_SetSpeed(uint16_t percentageTopSpeed);
-void MotorControl_SetSpin(uint16_t percentageTopSpin);
-void MotorControl_SetSpinMode(MOTOR_CONTROL_SPIN_MODE mode);
-
+void MotorControl_SetSpeed(MOTOR_TYPES motor_to_change, uint16_t percentageTopSpeed);
 
 
 /** @} */
