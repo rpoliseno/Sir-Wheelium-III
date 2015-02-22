@@ -11,6 +11,7 @@
 #include "servo_control.h"
 #include "stm8l15x_tim1.h"
 #include "stm8l15x_gpio.h"
+#include "timing_delay.h"
 
 /* Private datatypes ---------------------------------------------------------*/
 
