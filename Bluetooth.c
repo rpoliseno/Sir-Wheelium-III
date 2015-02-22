@@ -40,7 +40,6 @@ void Bluetooth__Initialize()
    // in the transmit buffer.
    //
   USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);
-  USART_ITConfig(USART1, USART_IT_IDLE, ENABLE);
   //IntEnable(INT_UART3);
 }
 
@@ -96,8 +95,7 @@ void Bluetooth__RxInterrupt()
    //Received Byte
    if(USART_GetITStatus(USART1, USART_IT_RXNE))
    {
-      USART_ClearITPendingBit(USART1,USART_IT_RXNE);
-
+      USART_ITConfig(USART1, USART_IT_IDLE, ENABLE);
       //read 1 byte and fill in the SIR_WHEELIAM_CMD
       readData = USART_ReceiveData8(USART1);
       switch(RxIndex)
@@ -135,13 +133,12 @@ void Bluetooth__RxInterrupt()
       {
          RxIndex++;
       }
+       
    }
-  
-  //RX line has gone IDLE
-  else if(USART_GetITStatus(USART1, USART_IT_IDLE))
-  {
-    RxIndex = 0;
-    USART_ClearITPendingBit(USART1,USART_IT_IDLE);
-  }
-   
+   if(USART_GetITStatus(USART1, USART_IT_IDLE))
+   {
+      USART_ClearITPendingBit(USART1,USART_IT_IDLE);
+      RxIndex = 0;
+      USART_ITConfig(USART1, USART_IT_IDLE, DISABLE);  
+   }
 }
