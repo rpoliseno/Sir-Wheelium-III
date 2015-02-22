@@ -31,6 +31,7 @@
 #include "stm8_eval_lcd.h"
 #include "timing_delay.h"
 #include "servo_control.h"
+#include "Bluetooth.h"
 
 /** @addtogroup STM8L15x_StdPeriph_Examples
   * @{
@@ -446,25 +447,25 @@ INTERRUPT_HANDLER(TIM1_CC_IRQHandler, 24)
   /* In order to detect unexpected events during development,
      it is recommended to set a breakpoint on the following instruction.
   */
-   if (IS_TIM1_EVENT_SOURCE(TIM1_EventSource_CC1))
+   if (TIM1_GetITStatus(TIM1_IT_CC1) != RESET)
    {
+      TIM1_ClearITPendingBit(TIM1_IT_CC1);
       ServoModule_DeassertServoOutputs(SERVO_LOADING);
-      TIM1_ClearFlag(TIM1_FLAG_CC1);
    }
-   if (IS_TIM1_EVENT_SOURCE(TIM1_EventSource_CC2))
+   if (TIM1_GetITStatus(TIM1_IT_CC2) != RESET)
    {
+      TIM1_ClearITPendingBit(TIM1_IT_CC2);
       ServoModule_DeassertServoOutputs(SERVO_FIRING);
-      TIM1_ClearFlag(TIM1_FLAG_CC2);
    }
-   if (IS_TIM1_EVENT_SOURCE(TIM1_EventSource_CC3))
+   if (TIM1_GetITStatus(TIM1_IT_CC3) != RESET)
    {
+      TIM1_ClearITPendingBit(TIM1_IT_CC3);
       ServoModule_DeassertServoOutputs(SERVO_HORIZONTAL_AIM);
-      TIM1_ClearFlag(TIM1_FLAG_CC3);
    }
-   if (IS_TIM1_EVENT_SOURCE(TIM1_EventSource_CC4))
+   if (TIM1_GetITStatus(TIM1_IT_CC4) != RESET)
    {
+      TIM1_ClearITPendingBit(TIM1_IT_CC4);
       ServoModule_DeassertServoOutputs(SERVO_VERTICLE_AIM);
-      TIM1_ClearFlag(TIM1_FLAG_CC4);
    }
 }
 
@@ -498,9 +499,6 @@ INTERRUPT_HANDLER(SPI1_IRQHandler, 26)
   */
 INTERRUPT_HANDLER(USART1_TX_TIM5_UPD_OVF_TRG_BRK_IRQHandler, 27)
 {
-  /* In order to detect unexpected events during development,
-     it is recommended to set a breakpoint on the following instruction.
-  */
 }
 
 /**
@@ -510,9 +508,7 @@ INTERRUPT_HANDLER(USART1_TX_TIM5_UPD_OVF_TRG_BRK_IRQHandler, 27)
   */
 INTERRUPT_HANDLER(USART1_RX_TIM5_CC_IRQHandler, 28)
 {
-  /* In order to detect unexpected events during development,
-     it is recommended to set a breakpoint on the following instruction.
-  */
+  Bluetooth__RxInterrupt();
 }
 
 /**
