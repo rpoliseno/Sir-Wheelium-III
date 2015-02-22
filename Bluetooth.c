@@ -17,11 +17,12 @@
 
 //local array accessed globally through GET
 #define COMMAND_FIFO_SIZE (32)
+#define COMMAND_FIFO_BIT_MASK (0x1F)
 #define COMMAND_FIFO_START_INDEX (0)
 
 static SIR_WHEELIUM_CMD CommandFIFO[COMMAND_FIFO_SIZE];
-static uint8_t NextCommandIndex = 0;
-static uint8_t ComandFIFOIndex = 0;
+static uint8_t CommandFIFOReadIndex = 0;
+static uint8_t CommandFIFOWriteIndex = 0;
 
 /*
 *\brief Initialize the Bluetooth module with USART1
@@ -44,14 +45,14 @@ void Bluetooth__Initialize()
 }
 
 /*
-*  \brief Returns a command if there is one that needs to be proccessed
+*\brief Returns a command if there is one that needs to be proccessed
 */
 SIR_WHEELIUM_CMD Bluetooth__GetCommand()
 {
   SIR_WHEELIUM_CMD CMD = {0xFF,0xFF,0xFF,0xFF,0xFF,0xFF};
-  if(NextCommandIndex != ComandFIFOIndex)
+  if(CommandFIFOReadIndex != CommandFIFOWriteIndex)
   {
-    CMD = CommandFIFO[NextCommandIndex++];
+    CMD = CommandFIFO[CommandFIFOReadIndex++];
     STM_EVAL_LEDOn(LED3);
   }
   else
@@ -61,10 +62,7 @@ SIR_WHEELIUM_CMD Bluetooth__GetCommand()
     STM_EVAL_LEDOff(LED3);
   }
   //Wrap the index back to COMMAND_FIFO_START_INDEX
-  if(NextCommandIndex >= COMMAND_FIFO_SIZE)
-  {
-    NextCommandIndex = COMMAND_FIFO_START_INDEX;
-  }
+  CommandFIFOReadIndex &= COMMAND_FIFO_BIT_MASK;
   return CMD;
 }
 
@@ -76,20 +74,17 @@ SIR_WHEELIUM_CMD Bluetooth__GetCommand()
 */
 void addCommandToFifo(SIR_WHEELIUM_CMD addedCMD)
 {
-  //Don't add command if you are going to overwrite the next command
-  if(((ComandFIFOIndex+1)%COMMAND_FIFO_SIZE) != NextCommandIndex)
-  {
-   CommandFIFO[ComandFIFOIndex++] = addedCMD;
-  }
-  else
-  {
+   //Don't add command if you are going to overwrite the next command
+   if(((CommandFIFOWriteIndex+1) & COMMAND_FIFO_BIT_MASK) != CommandFIFOReadIndex)
+   {
+   CommandFIFO[CommandFIFOWriteIndex++] = addedCMD;
+   }
+   else
+   {
     //ERROR Our Command Fifo is about to overwrite our next command
-  }
-  //wrap the index back to COMMAND_FIFO_START_INDEX
-  if(ComandFIFOIndex >= COMMAND_FIFO_SIZE)
-  {
-    ComandFIFOIndex = COMMAND_FIFO_START_INDEX;
-  }
+   }
+   //wrap the index back to COMMAND_FIFO_START_INDEX
+   CommandFIFOWriteIndex &= COMMAND_FIFO_BIT_MASK;
 }
 
 /*
