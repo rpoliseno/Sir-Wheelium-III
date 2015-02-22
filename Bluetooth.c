@@ -23,6 +23,9 @@ static SIR_WHEELIUM_CMD CommandFIFO[COMMAND_FIFO_SIZE];
 static uint8_t NextCommandIndex = 0;
 static uint8_t ComandFIFOIndex = 0;
 
+/*
+*\brief Initialize the Bluetooth module with USART1
+*/
 void Bluetooth__Initialize()
 {
   STM_EVAL_COMInit(COM1,9600,USART_WordLength_8b,
@@ -40,7 +43,9 @@ void Bluetooth__Initialize()
   //IntEnable(INT_UART3);
 }
 
-
+/*
+*  \brief Returns a command if there is one that needs to be proccessed
+*/
 SIR_WHEELIUM_CMD Bluetooth__GetCommand()
 {
   SIR_WHEELIUM_CMD CMD = {0xFF,0xFF,0xFF,0xFF,0xFF,0xFF};
@@ -66,7 +71,9 @@ SIR_WHEELIUM_CMD Bluetooth__GetCommand()
 
 
 
-//Adding command to FIFO
+/*
+*\brief Adding command to FIFO
+*/
 void addCommandToFifo(SIR_WHEELIUM_CMD addedCMD)
 {
   //Don't add command if you are going to overwrite the next command
@@ -85,12 +92,16 @@ void addCommandToFifo(SIR_WHEELIUM_CMD addedCMD)
   }
 }
 
+/*
+*\brief Process the interrupt and add command to the FIFO once you have recieve FIXED Length bytes (6)
+*/
 void Bluetooth__RxInterrupt()
 {
   uint8_t readData;
   static uint8_t RxIndex = 0;
   static SIR_WHEELIUM_CMD RxCommand;
   
+  //Received Byte
   if(USART_GetITStatus(USART1, USART_IT_RXNE))
   {
     USART_ClearITPendingBit(USART1,USART_IT_RXNE);
@@ -122,6 +133,7 @@ void Bluetooth__RxInterrupt()
          }
     }
   }
+  //RX line has gone IDLE
   else if(USART_GetITStatus(USART1, USART_IT_IDLE))
   {
     RxIndex = 0;

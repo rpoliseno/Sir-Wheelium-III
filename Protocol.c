@@ -7,7 +7,9 @@
 //Includes
 #include "Protocol.h"
 
-
+/*
+* \brief Process received Commands
+*/
 void Protocol__ReceivedCommand(SIR_WHEELIUM_CMD nextCommand)
 {
   switch(nextCommand.CMD)
