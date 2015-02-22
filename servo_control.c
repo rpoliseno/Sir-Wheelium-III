@@ -84,7 +84,7 @@ void ServoModule_Init(void)
    for(i = 0; i < NUM_SERVO_MOTORS; i++)
    {
       //initialize the appropriate outputs
-      GPIO_Init(SERVO_GPIO_PORT, ServoMotors.Motors[i].gpio_pin, GPIO_Mode_Out_PP_High_Fast);
+      GPIO_Init(SERVO_GPIO_PORT, ServoMotors.Motors[i].gpio_pin, GPIO_Mode_Out_PP_Low_Fast);
       setServoOutput(&(ServoMotors.Motors[i]));
    }
 }
@@ -117,19 +117,9 @@ bool SetServoAngle(SERVO_NAME servo, UINT16 angle)
   *         UINT16 angle
   * @retval FALSE if the angle was invalid for the motor specified, otherwise TRUE
   */
-void DeassertServoOutputs(void)
+void DeassertServoOutputs(UINT8 captureCompareNumTriggered)
 {
-   UINT8 i = 0;
-   
-   //Deassert the appropriate outputs
-   for (i=0; i<NUM_SERVO_MOTORS; i++)
-   {
-      if (TIM1_GetCounter() >= ServoMotors.Motors[i].captureCompareVal)
-      {
-         //the timer has passed the capture value for this servo; disassert the output
-         SERVO_GPIO_PORT->ODR &= (UINT8)~ServoMotors.Motors[i].gpio_pin;
-      }
-   }
+  SERVO_GPIO_PORT->ODR &= (UINT8)~ServoMotors.Motors[captureCompareNumTriggered].gpio_pin;
 }
 
 void AssertServoOutputs(void)
@@ -177,7 +167,7 @@ void setServoOutput(SERVO_MOTOR * const motor)
    UINT16 captureCompareValue = 0;
 
    //scale up the angle
-   temp32 = (motor->angle * (UINT16)ONE_MS_IN_TIMER_TICKS);   
+   temp32 = ((UINT32)motor->angle * (UINT32)ONE_MS_IN_TIMER_TICKS);   
    
    if (motor->type == ONE_EIGHTY_DEGREE)
    {
@@ -200,22 +190,22 @@ void setServoOutput(SERVO_MOTOR * const motor)
    {
       case SERVO_LOADING:
       {
-         TIM1_SetCompare1(captureCompareValue);
+         TIM1_SetCompare1(motor->captureCompareVal);
       }
       break;
       case SERVO_FIRING:
       {
-         TIM1_SetCompare2(captureCompareValue);
+         TIM1_SetCompare2(motor->captureCompareVal);
       }
       break;
       case SERVO_HORIZONTAL_AIM:
       {
-         TIM1_SetCompare3(captureCompareValue);
+         TIM1_SetCompare3(motor->captureCompareVal);
       }
       break;
       case SERVO_VERTICLE_AIM:
       {
-         TIM1_SetCompare4(captureCompareValue);
+         TIM1_SetCompare4(motor->captureCompareVal);
       }
       break;
       default:
