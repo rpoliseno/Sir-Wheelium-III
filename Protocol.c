@@ -32,6 +32,7 @@ void Protocol__ReceivedCommand(SIR_WHEELIUM_CMD nextCommand)
       }
       case COMMAND_LAUNCH:
       {
+        ServoModule_Fire(nextCommand.DATA[0]);
         break;
       }
       default:
