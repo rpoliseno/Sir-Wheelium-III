@@ -37,8 +37,8 @@ typedef struct
 
 /* Private defines -----------------------------------------------------------*/
 #define ONE_EIGHTY_DEGREES (0x7FFF)
-#define FIRING_SERVO_FIRING_POSITION   (0x7FFF)
-#define FIRING_SERVO_LOADING_POSITION  (0x0000)
+#define FIRING_SERVO_FIRING_POSITION   (0x0000)
+#define FIRING_SERVO_LOADING_POSITION  (0x6000)
 #define FIRING_SERVO_DELAY             (750)
 
 //Defines for servo timing requirements
@@ -79,7 +79,7 @@ void ServoModule_Init(void)
    ServoMotors = 
       (SERVO_MOTORS){
          (SERVO_MOTOR){SERVO_LOADING,         THREE_SIXTY_DEGREE,  0x0000, 0, GPIO_Pin_3},   //currently unused
-         (SERVO_MOTOR){SERVO_FIRING,          ONE_EIGHTY_DEGREE,   0x0000, 0, GPIO_Pin_2},
+         (SERVO_MOTOR){SERVO_FIRING,          ONE_EIGHTY_DEGREE,   FIRING_SERVO_LOADING_POSITION, 0, GPIO_Pin_2},
          (SERVO_MOTOR){SERVO_HORIZONTAL_AIM,  THREE_SIXTY_DEGREE,  0x7FFF, 0, GPIO_Pin_4},
          (SERVO_MOTOR){SERVO_VERTICLE_AIM,    ONE_EIGHTY_DEGREE,   0x3FFF, 0, GPIO_Pin_5}
       };
@@ -106,7 +106,7 @@ bool ServoModule_SetServoAngle(UINT8 servo, UINT16 angle)
   //only send the motor to the level if it is valid for this motor type
   if ((ServoMotors.Motors[servo].type == THREE_SIXTY_DEGREE) ||
       ((ServoMotors.Motors[servo].type == ONE_EIGHTY_DEGREE) &&
-       (ServoMotors.Motors[servo].angle <= ONE_EIGHTY_DEGREES)))
+       (angle <= ONE_EIGHTY_DEGREES)))
   {
       ServoMotors.Motors[servo].angle = angle;
       setServoOutput(&ServoMotors.Motors[servo]);
