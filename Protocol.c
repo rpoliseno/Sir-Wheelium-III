@@ -16,8 +16,11 @@ void Protocol__ReceivedCommand(SIR_WHEELIUM_CMD nextCommand)
 {
   switch(nextCommand.CMD)
     {
-       case 0:
+       case COMMAND_HALT_MOTORS:
          {
+           // shut off the motors
+           MotorControl_SetSpeed(MOTOR_TYPE_TOP, 0x0000);
+           MotorControl_SetSpeed(MOTOR_TYPE_BOTTOM, 0x0000);
            break;
          }
       case COMMAND_ADJUST_SPEED:

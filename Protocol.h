@@ -14,6 +14,7 @@
 #include "Bluetooth.h"
 
 //Commands!
+#define COMMAND_HALT_MOTORS         (0x00)
 #define COMMAND_ADJUST_SPEED        (0x02)
 #define COMMAND_ADJUST_ANGLE        (0x03)
 #define COMMAND_LAUNCH              (0x04)
