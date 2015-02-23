@@ -42,10 +42,12 @@ typedef struct
 #define FIRING_SERVO_DELAY             (750)
 
 //Defines for servo timing requirements
-#define PRESCALER             (0x000A)
-#define FOURTY_TWO_MS         (61091)
-#define NO_REPETITION         (0)
-#define ONE_MS_IN_TIMER_TICKS (1455)
+#define CLK_FREQUENCY                     (16000000)
+#define PRESCALER                         (0x000F)
+#define SERVO_UPDATE_TIME_IN_MS           (62)
+#define SERVO_UPDATE_TIME_IN_TIMER_TICKS  (SERVO_UPDATE_TIME_IN_MS*ONE_MS_IN_TIMER_TICKS)//(61091)
+#define NO_REPETITION                     (0)
+#define ONE_MS_IN_TIMER_TICKS             ((CLK_FREQUENCY/PRESCALER)/1000) ///(1455)
 
 #define TIMER_INTERRUPTS      (  TIM1_IT_Update | \
                                  TIM1_IT_CC1    | \
@@ -175,7 +177,7 @@ void timerForServos_Init(void)
   //prescaler = 0x0B = 11 => 45.055 mS before timer rolls over (need 42mS period)
   TIM1_TimeBaseInit((UINT16)PRESCALER, 
                     TIM1_CounterMode_Up, 
-                    (UINT16)FOURTY_TWO_MS, 
+                    (UINT16)SERVO_UPDATE_TIME_IN_TIMER_TICKS, 
                     (UINT8)NO_REPETITION);
   //enable the interrupts
   TIM1_ITConfig((TIM1_IT_TypeDef)TIMER_INTERRUPTS , ENABLE);
