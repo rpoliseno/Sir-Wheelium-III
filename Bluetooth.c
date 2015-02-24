@@ -14,6 +14,7 @@
 #include "stm8l1526_eval.h"
 #include "stm8l15x_usart.h"
 #include "Bluetooth.h"
+#include "timing_delay.h"
 
 //local array accessed globally through GET
 #define COMMAND_FIFO_SIZE (32)
@@ -32,7 +33,7 @@ void Bluetooth__Initialize()
   STM_EVAL_COMInit(COM1,9600,USART_WordLength_8b,
                       USART_StopBits_1 ,
                       USART_Parity_No,
-                      (USART_Mode_Rx));
+                      (USART_Mode_Tx));
    //
    // We are configured for buffered output so enable the master interrupt
    // for this UART and the receive interrupts.  We don't actually enable the
@@ -40,7 +41,16 @@ void Bluetooth__Initialize()
    // in the transmit buffer.
    //
   USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);
+
   //IntEnable(INT_UART3);
+   char nameCommand[23] = "AT+NAMESir-Wheelium-III";
+   int i;
+  
+   for (i =0; i < sizeof(nameCommand); i++)
+   {
+      USART_SendData8(USART1, nameCommand[i]);
+      Delay(1);
+   }
 }
 
 /*

@@ -236,6 +236,8 @@ void USART_Init(USART_TypeDef* USARTx, uint32_t BaudRate, USART_WordLength_TypeD
   USARTx->CR2 &= (uint8_t)~(USART_CR2_TEN | USART_CR2_REN);
   /* Set TEN and REN bits according to USART_Mode value */
   USARTx->CR2 |= (uint8_t)USART_Mode;
+  //TODO: BAD!
+  USARTx->CR2 &= ~0xC0; // Disable Tx interrupts.
 }
 
 /**
