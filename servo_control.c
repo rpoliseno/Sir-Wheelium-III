@@ -43,12 +43,12 @@ typedef struct
 
 //Defines for servo timing requirements
 #define CLK_FREQUENCY                     (16000000)
-#define PRESCALER                         (0x000F)
+#define PRESCALER                         (0x000A)
 #define SERVO_UPDATE_TIME_IN_MS           (27)
 // NOTE: SERVO_UPDATE_TIME_IN_TIMER_TICKS < 0xFFFF
 #define SERVO_UPDATE_TIME_IN_TIMER_TICKS  (ONE_MS_IN_TIMER_TICKS * SERVO_UPDATE_TIME_IN_MS)//(30118)//(SERVO_UPDATE_TIME_IN_MS*ONE_MS_IN_TIMER_TICKS)
 #define NO_REPETITION                     (0)
-#define ONE_MS_IN_TIMER_TICKS             (941)//((CLK_FREQUENCY/PRESCALER)/1000) ///(1455)
+#define ONE_MS_IN_TIMER_TICKS             (1455)//((CLK_FREQUENCY/PRESCALER)/1000) ///(1455)
 
 #define TIMER_INTERRUPTS      (  TIM1_IT_Update | \
                                  TIM1_IT_CC1    | \
