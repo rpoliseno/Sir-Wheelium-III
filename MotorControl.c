@@ -42,8 +42,8 @@
 #define TIM3_PRESCALER              (1)
 
 #define MOTOR_CONTROL_MAX_SPEED     (0xFFFF)
-//Minimum Motor speed is 30% of 0xFFFF
-#define MOTOR_CONTROL_MIN_SPEED     (0x4CCC)
+//Minimum Motor speed is 5% off
+#define MOTOR_CONTROL_MIN_SPEED     (0x0000)
 
 #define MOTOR_DEFAULT_SPEED         (0x0000)
 
